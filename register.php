@@ -66,7 +66,7 @@
             <form action="registration.php" method="POST">
               <div class="row gy-3">
                 <div class="col-md-12 form-group">
-                  <label>User name</label>
+                  <label>Username</label>
                   <input type="text" name="username" class="form-control" id="name" required>
                 </div>
 

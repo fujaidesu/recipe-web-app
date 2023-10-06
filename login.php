@@ -56,6 +56,7 @@
         <?php
           if(isset($_SESSION['isLoginSuccess']) && !$_SESSION['isLoginSuccess']) {
             echo '<div class="error-msg">Login failed. Invalid username or password.</div>';
+            unset($_SESSION['isLoginSuccess']); // unset the session variable
           }
         ?>
 

@@ -24,17 +24,32 @@
     $regEmail = mysqli_real_escape_string($con, $regEmail);  
     $regLastname = mysqli_real_escape_string($con, $regLastname);  
     $regFirstname = mysqli_real_escape_string($con, $regFirstname);  
-    
-    $sql = "INSERT INTO users(username,password,email,lastname,firstname) VALUES('$regUsername','$regPassword','$regEmail','$regLastname','$regFirstname')";  
 
-    if(mysqli_query($con, $sql)){  
-        $isRegistrationSuccess = true;
-        $_SESSION['isLoginSuccess'] = $isRegistrationSuccess;
-        //header("Location: account.php");  
-    } 
-    else{  
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);  
-    } 
+    // Check if user existed
+    $sql = "SELECT COUNT(*) AS totalNum FROM users WHERE username = '$regUsername' || email = '$regEmail'";
+    $result = mysqli_query($con, $sql);
+    if (!$result) {
+        die('Error: ' . mysqli_error($con));
+    }
+    $row = mysqli_fetch_assoc($result);
+    $totalNum = $row['totalNum'];
+    
+    if (!$totalNum){
+        $sql = "INSERT INTO users(username,password,email,lastname,firstname) VALUES('$regUsername','$regPassword','$regEmail','$regLastname','$regFirstname')";
+        if(mysqli_query($con, $sql)){  
+            $isRegistrationSuccess = true;
+            $_SESSION['isRegisterSuccess'] = $isRegistrationSuccess; 
+        } 
+        else{  
+            echo "Error: " . $sql . "<br>" . mysqli_error($con);  
+        }
+    }
+    else{
+        $isRegistrationSuccess = false;
+    }
+
+    $_SESSION['isRegisterSuccess'] = $isRegistrationSuccess;
+    header("Location: register.php"); 
 
     mysqli_close($con); 
 ?>

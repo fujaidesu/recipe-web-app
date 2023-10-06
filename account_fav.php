@@ -61,7 +61,7 @@
             echo '</tbody></table>';
         } else {
             // Display a message if no favorite recipes were found
-            echo '<p>You have no favorite recipes yet!</p>';
+            echo '<p>You have no favourite recipes yet!</p>';
         }
     } else {
         // Display an error message if the query execution failed
